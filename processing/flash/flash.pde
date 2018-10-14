@@ -10,24 +10,24 @@ long flash_start = 0;
 int flash_duration = 0;
 int myscreen = -1;
 int  maxscreen = 20;
-int fr = 1000;
 OscP5 oscP5;
 float amp = 0;
 
 void setup() {
-
-    size(500, 500);
-    oscP5 = new OscP5(this, 12000);
+    fullScreen();
+//    size(500, 500);
+    oscP5 = new OscP5(this, 12001);
     noise = new WhiteNoise(this);
     noise.play();
-            noise.amp(0);
-
+    noise.amp(0);
 }
 
 void draw() {
     if (myscreen == -1) {
+        textAlign(RIGHT, BOTTOM);
         drawSelectScreen();
     } else {
+        textAlign(CENTER, CENTER);
         drawFlash();
     }
 
@@ -38,10 +38,14 @@ void draw() {
 void drawFlash() {
     if (state == true) {
         background(255);
-
+        textSize(200);
+        fill(0);
+        text(myscreen, width / 2, (height / 2) - 40);
     } else {
         background(0);
-
+        textSize(200);
+        fill(255);
+        text(myscreen, width / 2, (height / 2) - 40);
     }
     if (abs(millis() - flash_start) > flash_duration ) {
         state = false;
