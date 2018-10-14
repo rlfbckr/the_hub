@@ -6,19 +6,21 @@ int myscreen = -1;
 int noise_seed = 1;
 long sync = 0;
 int slices = 40;
-long t = 0;
+int slices_of_other_screens = 20;
+float t = 0;
 float speed = 0.00001;
 float spread = 0.01;
 int  maxscreen = 20;
 int fr = 25;
 
-boolean _DEBUG_ = true;
-OscP5 oscP5;
+boolean _DEBUG_ = false;
 int port = 12001;
 
+OscP5 oscP5;
+
 void setup() {
-//    size(500, 500);
-    fullscreen();
+    //size(500, 500);
+    fullScreen();
     oscP5 = new OscP5(this, port);
     frameRate(fr);
     slices = 1000 / fr;
@@ -37,16 +39,15 @@ void draw() {
 
 void drawNoise() {
     background(0);
-    t = (long)(now() * speed);
-//slices = frameRate();
-    noStroke();
-    for (int ts = 0; ts < slices; ts++) {
-        // var col =  noise(  (t+(myscreen*slices)+ts)*scaling)*255;
-        float r = noise(0, (t + ts + (myscreen * slices)) * spread) * 255;
-        float g = noise(20000, (t + ts + (myscreen * slices)) * spread) * 255;
-        float b = noise(30000, (t + ts + (myscreen * slices)) * spread) * 255;
-        fill(r, g, b);
-        rect(map(ts, 0, slices, 0, width), 0, map(ts + 1, 0, slices, 0, width), height);
+    stroke(255);
+    noFill();
+    for (int ts = -slices_of_other_screens; ts < slices + slices_of_other_screens; ts++) {
+        beginShape();
+        for (int y = 0 ; y < 50; y++) {
+            float xpos = noise( ((myscreen * slices) + ts) * 0.1, y * 0.1, now()*speed);
+            vertex( map(ts, -slices_of_other_screens, slices + slices_of_other_screens,0 - (width / slices) * slices_of_other_screens, width + (width / slices) * slices_of_other_screens) + map(xpos, 0, 1, -spread, spread), map(y, 0, 49, 0, height));
+        }
+        endShape();
     }
 
     if (_DEBUG_) {
@@ -112,5 +113,7 @@ long now() {
 }
 
 void keyReleased() {
-
+    if (key == 'd') {
+        _DEBUG_ = !_DEBUG_;
+    }
 }
