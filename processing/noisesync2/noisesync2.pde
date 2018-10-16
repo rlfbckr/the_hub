@@ -13,14 +13,13 @@ float spread = 0.01;
 int  maxscreen = 20;
 
 boolean _DEBUG_ = false;
-int port = 12001;
 
 OscP5 oscP5;
 
 void setup() {
     //size(500, 500);
     fullScreen();
-    oscP5 = new OscP5(this, port);
+    oscP5 = new OscP5(this, 12000);
     frameRate(25);
     noiseDetail(1, 9.2);
 }

@@ -13,11 +13,11 @@ int  maxscreen = 20;
 
 boolean _DEBUG_ = true;
 OscP5 oscP5;
-int port = 12001;
+
 
 void setup() {
     fullScreen();
-    oscP5 = new OscP5(this, port);
+    oscP5 = new OscP5(this, 12000);
     frameRate(25);
     noiseDetail(1, 9.2);
 }
@@ -110,6 +110,5 @@ long now() {
 void keyReleased() {
     if (key == 'd') {
         _DEBUG_ = !_DEBUG_;
-        println("toggle debug");
     }
 }
