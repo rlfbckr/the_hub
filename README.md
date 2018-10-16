@@ -2,20 +2,21 @@
 
 kleine anleitung:
 
-### processing runterladen:
+### 1. processing runterladen:
 https://processing.org/download/
 
-### processing installieren
+### 2. processing installieren
 
-### libraries installieren ( Sketch -> Library importieren -> Library hinzufügen )
+### 3. libraries installieren
+( Sketch -> Library importieren -> Library hinzufügen )
 - oscP5
 - Sound
 
-### The Hub Demos runterladen
+### 4. The Hub Demos runterladen
 click auf "Clone or download" -> Download ZIP
 
-### Mit The Hub verbinden
+### 5. Mit The Hub verbinden
 
-### Zip file auspacken
+### 6. Zip file auspacken
 
-### los geht's
+### 7. Los geht's
