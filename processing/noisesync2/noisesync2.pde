@@ -116,7 +116,7 @@ void oscEvent(OscMessage theOscMessage) {
     }
     if (theOscMessage.checkAddrPattern("/nd") == true) {
         if (theOscMessage.checkTypetag("ff")) {
-            noiseDetail((int)theOscMessage.get(0).floatValue(),theOscMessage.get(1).floatValue());
+            noiseDetail((int)theOscMessage.get(0).floatValue(), theOscMessage.get(1).floatValue());
         }
     }
 
