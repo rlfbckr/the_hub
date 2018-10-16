@@ -3,13 +3,15 @@ import oscP5.*;
 import netP5.*;
 
 int myscreen = -1;
-int  maxscreen = 20;
+int maxscreen = 20;
+boolean show_number = true;
 
 int state = 0;
 long flash_start = 0;
 int flash_duration = 0;
-
+int frequency = 0;
 WhiteNoise noise;
+
 OscP5 oscP5;
 
 void setup() {
@@ -18,12 +20,16 @@ void setup() {
     noise = new WhiteNoise(this);
     noise.play();
     noise.amp(0);
+
+
 }
 
 void draw() {
     if (myscreen == -1) {
         drawSelectScreen();
     } else {
+        //sin_amp = (sin_amp * 0.9) + (sin_amp_goto * 0.1);
+        // sine.amp(sin_amp);
         drawFlash();
     }
 }
@@ -33,11 +39,13 @@ void draw() {
 void drawFlash() {
     textAlign(CENTER, CENTER);
     background(state * 255);
-    textSize(200);
-    fill(abs(state-1) * 255);
-    text(myscreen, width / 2, (height / 2) - 40);
 
-    if (abs(millis() - flash_start) > flash_duration ) {
+    if (show_number) {
+        textSize(200);
+        fill(abs(state - 1) * 255);
+        text(myscreen, width / 2, (height / 2) - 40);
+    }
+    if (state == 1 && abs(millis() - flash_start) > flash_duration ) {
         // turn flash off after
         state = 0;
         noise.amp(0);
@@ -81,6 +89,22 @@ void oscEvent(OscMessage theOscMessage) {
             }
         }
     }
+    if (theOscMessage.checkAddrPattern("/show_number") == true) {
+        if (theOscMessage.checkTypetag("i")) {
+            if (theOscMessage.get(0).intValue() == 1) {
+                show_number = true;
+            } else {
+                show_number = false;
+            }
+        }
+    }
+
+    if (theOscMessage.checkAddrPattern("/frequency") == true) {
+        if (theOscMessage.checkTypetag("i")) {
+            frequency = theOscMessage.get(0).intValue();
+        }
+    }
 
 }
+
 
