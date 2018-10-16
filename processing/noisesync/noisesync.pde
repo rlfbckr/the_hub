@@ -13,11 +13,11 @@ int  maxscreen = 20;
 
 boolean _DEBUG_ = true;
 OscP5 oscP5;
-
+int port = 12000;
 
 void setup() {
     fullScreen();
-    oscP5 = new OscP5(this, 12000);
+    oscP5 = new OscP5(this, port);
     frameRate(25);
     noiseDetail(1, 9.2);
 }

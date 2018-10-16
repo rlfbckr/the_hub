@@ -11,17 +11,17 @@ float t = 0;
 float speed = 0.00001;
 float spread = 0.01;
 int  maxscreen = 20;
-
+int port = 12000;
 boolean _DEBUG_ = false;
+float rotatex = 0;
+float zheight = 0;
 
 OscP5 oscP5;
 
 void setup() {
-    //size(500, 500);
-    fullScreen();
-    oscP5 = new OscP5(this, 12000);
+    fullScreen(OPENGL);
+    oscP5 = new OscP5(this, port);
     frameRate(25);
-    noiseDetail(1, 9.2);
 }
 
 void draw() {
@@ -38,15 +38,18 @@ void drawNoise() {
     background(0);
     stroke(255);
     noFill();
+    pushMatrix();
+    rotateX(radians(rotatex));
     for (int ts = -slices_of_other_screens; ts < slices + slices_of_other_screens; ts++) {
         beginShape();
         for (int y = 0 ; y < 50; y++) {
             float xpos = noise( ((myscreen * slices) + ts) * 0.1, y * 0.1, now() * speed);
-            vertex( map(ts, -slices_of_other_screens, slices + slices_of_other_screens, 0 - (width / slices) * slices_of_other_screens, width + (width / slices) * slices_of_other_screens) + map(xpos, 0, 1, -spread, spread), map(y, 0, 49, 0, height));
+            float zpos = zheight * noise(1000 + ((myscreen * slices) + ts) * 0.1, y * 0.1, now() * speed * 2);
+            vertex( map(ts, -slices_of_other_screens, slices + slices_of_other_screens, 0 - (width / slices) * slices_of_other_screens, width + (width / slices) * slices_of_other_screens) + map(xpos, 0, 1, -spread, spread), map(y, 0, 49, 0, height), zpos);
         }
         endShape();
     }
-
+    popMatrix();
     if (_DEBUG_) {
         fill(0, 255, 255);
         textAlign(LEFT);
@@ -101,6 +104,22 @@ void oscEvent(OscMessage theOscMessage) {
             spread =  theOscMessage.get(0).floatValue();
         }
     }
+    if (theOscMessage.checkAddrPattern("/rotatex") == true) {
+        if (theOscMessage.checkTypetag("f")) {
+            rotatex =  theOscMessage.get(0).floatValue();
+        }
+    }
+    if (theOscMessage.checkAddrPattern("/zheight") == true) {
+        if (theOscMessage.checkTypetag("f")) {
+            zheight =  theOscMessage.get(0).floatValue();
+        }
+    }
+    if (theOscMessage.checkAddrPattern("/nd") == true) {
+        if (theOscMessage.checkTypetag("ff")) {
+            noiseDetail((int)theOscMessage.get(0).floatValue(),theOscMessage.get(1).floatValue());
+        }
+    }
+
 
 }
 
