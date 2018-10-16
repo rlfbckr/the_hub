@@ -5,7 +5,7 @@ import netP5.*;
 int myscreen = -1;
 int  maxscreen = 20;
 
-boolean state = true;
+int state = 0;
 long flash_start = 0;
 int flash_duration = 0;
 
@@ -14,7 +14,6 @@ OscP5 oscP5;
 
 void setup() {
     fullScreen();
-//    size(500, 500);
     oscP5 = new OscP5(this, 12001);
     noise = new WhiteNoise(this);
     noise.play();
@@ -27,27 +26,20 @@ void draw() {
     } else {
         drawFlash();
     }
-
 }
 
 
 
 void drawFlash() {
     textAlign(CENTER, CENTER);
+    background(state * 255);
+    textSize(200);
+    fill(abs(state-1) * 255);
+    text(myscreen, width / 2, (height / 2) - 40);
 
-    if (state == true) {
-        background(255);
-        textSize(200);
-        fill(0);
-        text(myscreen, width / 2, (height / 2) - 40);
-    } else {
-        background(0);
-        textSize(200);
-        fill(255);
-        text(myscreen, width / 2, (height / 2) - 40);
-    }
     if (abs(millis() - flash_start) > flash_duration ) {
-        state = false;
+        // turn flash off after
+        state = 0;
         noise.amp(0);
     }
 }
@@ -60,7 +52,7 @@ void drawSelectScreen() {
     textAlign(LEFT);
     text("Please Select your Screen:", 100, 100);
     textSize(20);
-    textAlign(CENTER,CENTER);
+    textAlign(CENTER, CENTER);
 
     for (int i = 0; i < maxscreen; i++) {
         stroke(255);
@@ -74,9 +66,7 @@ void drawSelectScreen() {
         rect(100 + (i * 40), 150, 30, 30);
         fill(255);
         text(i, 100 + (i * 40) + 16, 165);
-
     }
-
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -85,7 +75,7 @@ void oscEvent(OscMessage theOscMessage) {
             int target_screen =  theOscMessage.get(0).intValue();
             if (target_screen == -1 || target_screen == myscreen) {
                 flash_duration =  theOscMessage.get(1).intValue();
-                state = true;
+                state = 1;
                 noise.amp(1);
                 flash_start = millis();
             }
