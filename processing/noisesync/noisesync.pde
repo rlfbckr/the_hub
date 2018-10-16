@@ -5,23 +5,20 @@ import java.net.*;
 int myscreen = -1;
 int noise_seed = 1;
 long sync = 0;
-int slices = 40;
+int slices = 40; // 1000 / 25  - 1sec / framerate
 long t = 0;
 float speed = 0.00001;
 float spread = 0.01;
 int  maxscreen = 20;
-int fr = 25;
 
 boolean _DEBUG_ = true;
 OscP5 oscP5;
 int port = 12001;
 
 void setup() {
-//    size(500, 500);
     fullScreen();
     oscP5 = new OscP5(this, port);
-    frameRate(fr);
-    slices = 1000 / fr;
+    frameRate(25);
     noiseDetail(1, 9.2);
 }
 
@@ -36,9 +33,7 @@ void draw() {
 
 
 void drawNoise() {
-    background(0);
     t = (long)(now() * speed);
-//slices = frameRate();
     noStroke();
     for (int ts = 0; ts < slices; ts++) {
         // var col =  noise(  (t+(myscreen*slices)+ts)*scaling)*255;
@@ -51,6 +46,7 @@ void drawNoise() {
 
     if (_DEBUG_) {
         fill(0, 255, 255);
+        textAlign(LEFT);
         text("myscreen     = " + myscreen + " / " + port, 20, 20);
         text("noise_seed   = " + noise_seed, 20, 50);
         text("now()        = " + now(), 20, 80);
@@ -61,13 +57,14 @@ void drawNoise() {
 
 }
 
-
 void drawSelectScreen() {
     background(0);
     fill(255, 255, 255);
     textSize(60);
-    text("Please Select your Screen:", width / 2, 100);
+    textAlign(LEFT);
+    text("Please Select your Screen:", 100, 100);
     textSize(20);
+    textAlign(CENTER, CENTER);
 
     for (int i = 0; i < maxscreen; i++) {
         stroke(255);
@@ -80,11 +77,10 @@ void drawSelectScreen() {
         }
         rect(100 + (i * 40), 150, 30, 30);
         fill(255);
-        text(i, 100 + (i * 40) + 13, 172);
-
+        text(i, 100 + (i * 40) + 16, 165);
     }
-
 }
+
 
 void oscEvent(OscMessage theOscMessage) {
     if (theOscMessage.checkAddrPattern("/s") == true) {
@@ -112,5 +108,8 @@ long now() {
 }
 
 void keyReleased() {
-
+    if (key == 'd') {
+        _DEBUG_ = !_DEBUG_;
+        println("toggle debug");
+    }
 }

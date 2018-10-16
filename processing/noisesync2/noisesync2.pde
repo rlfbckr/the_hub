@@ -11,7 +11,6 @@ float t = 0;
 float speed = 0.00001;
 float spread = 0.01;
 int  maxscreen = 20;
-int fr = 25;
 
 boolean _DEBUG_ = false;
 int port = 12001;
@@ -22,8 +21,7 @@ void setup() {
     //size(500, 500);
     fullScreen();
     oscP5 = new OscP5(this, port);
-    frameRate(fr);
-    slices = 1000 / fr;
+    frameRate(25);
     noiseDetail(1, 9.2);
 }
 
@@ -44,14 +42,15 @@ void drawNoise() {
     for (int ts = -slices_of_other_screens; ts < slices + slices_of_other_screens; ts++) {
         beginShape();
         for (int y = 0 ; y < 50; y++) {
-            float xpos = noise( ((myscreen * slices) + ts) * 0.1, y * 0.1, now()*speed);
-            vertex( map(ts, -slices_of_other_screens, slices + slices_of_other_screens,0 - (width / slices) * slices_of_other_screens, width + (width / slices) * slices_of_other_screens) + map(xpos, 0, 1, -spread, spread), map(y, 0, 49, 0, height));
+            float xpos = noise( ((myscreen * slices) + ts) * 0.1, y * 0.1, now() * speed);
+            vertex( map(ts, -slices_of_other_screens, slices + slices_of_other_screens, 0 - (width / slices) * slices_of_other_screens, width + (width / slices) * slices_of_other_screens) + map(xpos, 0, 1, -spread, spread), map(y, 0, 49, 0, height));
         }
         endShape();
     }
 
     if (_DEBUG_) {
         fill(0, 255, 255);
+        textAlign(LEFT);
         text("myscreen     = " + myscreen + " / " + port, 20, 20);
         text("noise_seed   = " + noise_seed, 20, 50);
         text("now()        = " + now(), 20, 80);
@@ -62,13 +61,14 @@ void drawNoise() {
 
 }
 
-
 void drawSelectScreen() {
     background(0);
     fill(255, 255, 255);
     textSize(60);
-    text("Please Select your Screen:", width / 2, 100);
+    textAlign(LEFT);
+    text("Please Select your Screen:", 100, 100);
     textSize(20);
+    textAlign(CENTER, CENTER);
 
     for (int i = 0; i < maxscreen; i++) {
         stroke(255);
@@ -81,12 +81,9 @@ void drawSelectScreen() {
         }
         rect(100 + (i * 40), 150, 30, 30);
         fill(255);
-        text(i, 100 + (i * 40) + 13, 172);
-
+        text(i, 100 + (i * 40) + 16, 165);
     }
-
 }
-
 void oscEvent(OscMessage theOscMessage) {
     if (theOscMessage.checkAddrPattern("/s") == true) {
         if (theOscMessage.checkTypetag("i")) {
