@@ -2,16 +2,15 @@ import processing.sound.*;
 import oscP5.*;
 import netP5.*;
 
-
-WhiteNoise noise;
+int myscreen = -1;
+int  maxscreen = 20;
 
 boolean state = true;
 long flash_start = 0;
 int flash_duration = 0;
-int myscreen = -1;
-int  maxscreen = 20;
+
+WhiteNoise noise;
 OscP5 oscP5;
-float amp = 0;
 
 void setup() {
     fullScreen();
@@ -24,10 +23,8 @@ void setup() {
 
 void draw() {
     if (myscreen == -1) {
-        textAlign(RIGHT, BOTTOM);
         drawSelectScreen();
     } else {
-        textAlign(CENTER, CENTER);
         drawFlash();
     }
 
@@ -36,6 +33,8 @@ void draw() {
 
 
 void drawFlash() {
+    textAlign(CENTER, CENTER);
+
     if (state == true) {
         background(255);
         textSize(200);
@@ -58,8 +57,10 @@ void drawSelectScreen() {
     background(0);
     fill(255, 255, 255);
     textSize(60);
-    text("Please Select your Screen:", width / 2, 100);
+    textAlign(LEFT);
+    text("Please Select your Screen:", 100, 100);
     textSize(20);
+    textAlign(CENTER,CENTER);
 
     for (int i = 0; i < maxscreen; i++) {
         stroke(255);
@@ -72,7 +73,7 @@ void drawSelectScreen() {
         }
         rect(100 + (i * 40), 150, 30, 30);
         fill(255);
-        text(i, 100 + (i * 40) + 13, 172);
+        text(i, 100 + (i * 40) + 16, 165);
 
     }
 
