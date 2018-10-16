@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 146.0, 246.0, 644.0, 482.0 ],
+		"rect" : [ 145.0, 245.0, 645.0, 482.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -55,8 +55,8 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 96.0, 317.0, 115.0, 22.0 ],
-					"text" : "broadcast 127.0.0.1"
+					"patching_rect" : [ 96.0, 317.0, 141.0, 22.0 ],
+					"text" : "broadcast 192.168.8.255"
 				}
 
 			}

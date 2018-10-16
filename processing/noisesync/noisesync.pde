@@ -18,7 +18,7 @@ int port = 12001;
 
 void setup() {
 //    size(500, 500);
-    fullscreen();
+    fullScreen();
     oscP5 = new OscP5(this, port);
     frameRate(fr);
     slices = 1000 / fr;
