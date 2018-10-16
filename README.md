@@ -1,4 +1,4 @@
-## demos für "The Hub"
+## Demos für "The Hub"
 
 kleine anleitung:
 
@@ -15,7 +15,7 @@ https://processing.org/download/
 ### 4. The Hub Demos runterladen
 click auf "Clone or download" -> Download ZIP
 
-### 5. Mit The Hub verbinden
+### 5. Mit "The Hub"-Wifi verbinden
 
 ### 6. Zip file auspacken
 
