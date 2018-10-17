@@ -16,6 +16,8 @@ https://processing.org/download/
 click auf "Clone or download" -> Download ZIP
 
 ### 5. Mit "The Hub"-Wifi verbinden
+ssid: thehub
+password: blumentopferde
 
 ### 6. Zip file auspacken
 
