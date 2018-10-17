@@ -18,6 +18,8 @@ click auf "Clone or download" -> Download ZIP
 ### 5. Mit "The Hub"-Wifi verbinden
 ssid: thehub
 password: blumentopferde
+ip: 192.168.5.your_number
+subnetmask: 255.255.0.0.
 
 ### 6. Zip file auspacken
 
